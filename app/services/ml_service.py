@@ -9,7 +9,7 @@ from app.repositories.kapal_repository import GambarKapalRepository
 class MLService:
     def __init__(self):
         self.hog_extractor = HOGFeatureExtractor()
-        self.svm_classifier = SVMClassifier(Config.SVM_MODEL_PATH)
+        self.svm_classifier = SVMClassifier(Config.SVM_MODEL_PATH, Config.SCALER_PATH)
         self.gambar_repo = GambarKapalRepository()
 
     def process_and_predict(self, kapal_id, file):

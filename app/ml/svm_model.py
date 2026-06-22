@@ -4,9 +4,11 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 import os
 
 class SVMClassifier:
-    def __init__(self, model_path):
+    def __init__(self, model_path, scaler_path=None):
         self.model_path = model_path
+        self.scaler_path = scaler_path
         self.model = None
+        self.scaler = None
         self._load_model()
 
     def _load_model(self):
@@ -15,6 +17,11 @@ class SVMClassifier:
         else:
             # Inisialisasi model kosong jika belum ada
             self.model = SVC(kernel='linear', probability=True)
+            
+        if self.scaler_path and os.path.exists(self.scaler_path):
+            self.scaler = joblib.load(self.scaler_path)
+        else:
+            self.scaler = None
 
     def train(self, X_train, y_train):
         """
@@ -40,8 +47,22 @@ class SVMClassifier:
         """
         if self.model is None or not hasattr(self.model, "classes_"):
             raise ValueError("Model belum dilatih atau tidak ditemukan.")
-        prediction = self.model.predict([features])
-        return prediction[0]
+            
+        features_scaled = [features]
+        if self.scaler is not None:
+            features_scaled = self.scaler.transform(features_scaled)
+            
+        prediction = self.model.predict(features_scaled)[0]
+        
+        # Map output to "Baik" or "Rusak"
+        # Berdasarkan notebook: Baik = 1, Rusak = 0
+        if prediction == 1 or prediction == "1":
+            return "Baik"
+        elif prediction == 0 or prediction == "0":
+            return "Rusak"
+        else:
+            return prediction
 
     def save_model(self):
         joblib.dump(self.model, self.model_path)
+
