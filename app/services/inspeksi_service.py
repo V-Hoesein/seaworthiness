@@ -20,22 +20,18 @@ class InspeksiService:
 
         # 2. Hitung Skor
         apar = int(data.get('apar', 0))
-        radio = int(data.get('radio', 0))
         jaket = int(data.get('jaket', 0))
-        izin = int(data.get('izin', 0))
         mesin = int(data.get('mesin', 0))
 
         skor, status = self.scoring_service.hitung_skor(
-            svm_result, apar, radio, jaket, izin, mesin
+            svm_result, apar, jaket, mesin
         )
 
         # 3. Simpan Inspeksi
         inspeksi = Inspeksi(
             kapal_id=kapal.id,
             apar=apar,
-            radio=radio,
             jaket=jaket,
-            izin=izin,
             mesin=mesin,
             skor=skor,
             status_kelayakan=status

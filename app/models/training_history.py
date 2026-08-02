@@ -9,7 +9,7 @@ class TrainingHistory(db.Model):
     precision = db.Column(db.Float, nullable=False)
     recall = db.Column(db.Float, nullable=False)
     model_path = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
         return f"<TrainingHistory {self.id} - Acc: {self.accuracy}>"

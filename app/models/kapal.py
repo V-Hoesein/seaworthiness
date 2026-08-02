@@ -8,7 +8,7 @@ class Kapal(db.Model):
     nama_kapal = db.Column(db.String(100), nullable=False)
     pemilik = db.Column(db.String(100), nullable=False)
     nomor_registrasi = db.Column(db.String(50), unique=True, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     # Relationships
     gambar = db.relationship('GambarKapal', backref='kapal', lazy=True, cascade="all, delete-orphan")
