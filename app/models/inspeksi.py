@@ -9,6 +9,7 @@ class Inspeksi(db.Model):
     
     # Nilai boolean / integer untuk komponen administrasi
     apar = db.Column(db.Integer, nullable=False, default=0)
+    radio = db.Column(db.Integer, nullable=False, default=0)
     jaket = db.Column(db.Integer, nullable=False, default=0)
     mesin = db.Column(db.Integer, nullable=False, default=0)
     
